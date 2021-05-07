@@ -219,8 +219,6 @@ uint32_t timer = millis();
 //END GPS**********
 
 
-//FILE WRITING *****
-  file = SD.open("data.csv", FILE_WRITE);
 
 void loop()
 {
@@ -258,7 +256,7 @@ void loop()
   if (millis() - timer > PeriodUpdateGPS) { 
     timer = millis(); // reset the timer
     
-    Serial.print("\nTime: ");
+    /*Serial.print("\nTime: ");
     Serial.print(GPS.hour, DEC); Serial.print(':');
     Serial.print(GPS.minute, DEC); Serial.print(':');
     Serial.print(GPS.seconds, DEC); Serial.print('.');
@@ -268,9 +266,10 @@ void loop()
     Serial.print(GPS.month, DEC); Serial.print("/20");
     Serial.println(GPS.year, DEC);
     Serial.print("Fix: "); Serial.print((int)GPS.fix);
-    Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
+    Serial.print(" quality: "); Serial.println((int)GPS.fixquality); */
     //Uncomment the loop to display NMEA frame only when GPS module is locked on satellites (GPS fix).
     //if (GPS.fix) {
+/*
       Serial.print("Location: ");
       Serial.print(GPS.latitude, 4); Serial.print(GPS.lat);
       Serial.print(", "); 
@@ -284,6 +283,7 @@ void loop()
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
+*/
    // }
   }
 
@@ -331,7 +331,7 @@ void loop()
   }
 
   
-  
+  /*
   file.println((int)GPS.fix);
   file.println(",");
   file.println((int)GPS.fixquality);
@@ -349,5 +349,5 @@ void loop()
   file.println(sx1272._SNR,DEC);
   file.println(",");
   file.println(sx1272._RSSI,DEC);
-  file.println();
+  file.println();*/
 }
