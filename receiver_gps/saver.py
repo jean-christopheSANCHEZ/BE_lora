@@ -22,33 +22,25 @@ if (len(ports) != 0): # on a trouvé au moins un port actif
     for port in ports :  # affichage du nom de chaque port
         print(str(ligne) + ' : ' + port.device)
         ligne = ligne + 1
-
-    portChoisi = input('Ecrivez le numero du port desire:')
-
-    print('1: 9600   2: 38400    3: 115200')
-
-    baud = input('Ecrivez le baud rate desire:')
-
-    if (baud == 1):
-        baud = 9600
-    if (baud == 2):
-        baud = 38400
-    if (baud == 3):
-        baud = 115200
+    
+    baud = 115200
 
     # on établit la communication série
-    arduino = serial.Serial(ports[portChoisi - 1].device, baud, timeout=1)
-    
+    #arduino = serial.Serial(ports[portChoisi - 1].device, baud)
+    arduino = serial.Serial('COM3', baud)
+
     print('Connexion a ' + arduino.name + ' a un baud rate de ' + str(baud))
 
     # si on reçoit un message, on l'affiche
+    file = open('data.csv', 'w')
     while True:
         data = arduino.readline()[:-2]
+        print(data.decode('utf-8'))
         if data:
-            print(data)
-            with open('data.csv', 'w', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([data])
+            #print(data)
+            writer = csv.writer(file)
+            writer.writerow([data.decode('utf-8')])
+            #file.write(data.decode('utf-8'))
 
 else: # on n'a pas trouvé de port actif
     print("Aucun port actif n'a ete trouve")

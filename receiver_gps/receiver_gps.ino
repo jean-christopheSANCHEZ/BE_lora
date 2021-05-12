@@ -56,14 +56,14 @@ int8_t e;
 boolean ConfigOK = true; //passe à false si problème d'allumage, de config de la fréquence ou de la puissance de sortie
 
 //FILE WRITING *****
- File file;
+
 
 void setup() {
   //GPS***********
    // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
   // also spit it out
-  Serial.begin(115200);
-  Serial.println("Adafruit GPS library basic test!");
+  //Serial.begin(115200);
+  //Serial.println("Adafruit GPS library basic test!");
 
   // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
   GPS.begin(9600);
@@ -84,8 +84,8 @@ void setup() {
 
   delay(1000);
   // Ask for firmware version
-  Serial.println(PMTK_Q_RELEASE);  //marche.
-  Serial.println(ARDUINO); 
+  //Serial.println(PMTK_Q_RELEASE);  //marche.
+  //Serial.println(ARDUINO); 
 
   //END GPS*************
 
@@ -97,45 +97,45 @@ void setup() {
   Serial.begin(115200);
 
   // Print a start message
-  Serial.println(F("SX1272 module configuration in Arduino"));
+  //Serial.println(F("SX1272 module configuration in Arduino"));
 
   // Power ON the module
   e = sx1272.ON();
   if (e == 0)
   {
-    Serial.println(F("SX1272 Module on"));
+    //Serial.println(F("SX1272 Module on"));
   }
   else
   {
-    Serial.println(F("Problem of activation of SX1272 Module !"));
+    //Serial.println(F("Problem of activation of SX1272 Module !"));
     ConfigOK = false;
   }
 
   // Select frequency channel
   e = sx1272.setChannel(freq_centrale);
-  Serial.print(F("Frequency channel "));
-  Serial.print(freq_centrale,HEX);
+  //Serial.print(F("Frequency channel "));
+  //Serial.print(freq_centrale,HEX);
   if (e == 0)
   {
-    Serial.println(F(" has been successfully set."));
+    //Serial.println(F(" has been successfully set."));
   }
   else
   {
-    Serial.println(F(" has not been set !"));
+    //Serial.println(F(" has not been set !"));
     ConfigOK = false;
   }
 
   // Select output power
   e = sx1272.setPower(OutPower);
-  Serial.print(F("Output power "));
-  Serial.print(OutPower,HEX);
+  //Serial.print(F("Output power "));
+  //Serial.print(OutPower,HEX);
   if (e == 0)
   {
-    Serial.println(F(" has been successfully set."));
+    //Serial.println(F(" has been successfully set."));
   }
   else
   {
-    Serial.println(F(" has not been set !"));
+    //Serial.println(F(" has not been set !"));
     ConfigOK = false;
   }
   
@@ -156,7 +156,7 @@ void setup() {
     sx1272._maxRetries = MaxNbRetries; 
 
     //parameters display 
-    Serial.println(F("#Verification of parameters:#"));
+    /*Serial.println(F("#Verification of parameters:#"));
     Serial.print(F("  Node address: "));
     Serial.println(sx1272._nodeAddress,DEC);  
     Serial.print(F("  Bandwidth: "));
@@ -171,20 +171,20 @@ void setup() {
     Serial.println(sx1272._CRC,DEC); 
     Serial.print(F("  BW: "));
     Serial.println(sx1272._bandwidth,DEC); 
-    Serial.println(F("SX1272 successfully configured !"));
+    Serial.println(F("SX1272 successfully configured !"));*/
   }
   else
   {
-    Serial.println(F("SX1272 initialization failed !")); 
+    //Serial.println(F("SX1272 initialization failed !")); 
   }
 
   if (ConfigOK == true) {
     //affichage entête
     //statut (correct = 1 or bad = 0 or non received = 2) 
-    Serial.println(F("\n "));
+    /*Serial.println(F("\n "));
     Serial.println(F("Module ready for reception ! "));
     Serial.println(F("Packet status ; Packet number ; Received data ; RSSI packet (dBm) ; source address ; SNR ; RSSI "));
-    Serial.println(F("\n "));
+    Serial.println(F("\n "));*/
   }  
   
 }
@@ -309,22 +309,30 @@ void loop()
     }  
   
     //écriture de la ligne de résultat
+    Serial.print((int)GPS.fix);
+    Serial.print(";");
+    Serial.print((int)GPS.fixquality);
+    Serial.print(";");
+    Serial.print(GPS.latitudeDegrees, 4);
+    Serial.print(";");
+    Serial.print(GPS.longitudeDegrees, 4);
+    Serial.print(";");
     Serial.print(StatusRXMessage);
-    Serial.print(F(" ; "));
+    Serial.print(F(";"));
     Serial.print(sx1272.packet_received.packnum,DEC);
-    Serial.print(F(" ; "));
+    Serial.print(F(";"));
     for (uint8_t i =0; i < sx1272.packet_received.length; i++) {
       Serial.print(sx1272.packet_received.data[i]);  
     }
-    Serial.print(F(" ; "));
+    Serial.print(F(";"));
     e = sx1272.getRSSIpacket();
     Serial.print(sx1272._RSSIpacket, DEC); 
-    Serial.print(F(" ; "));
+    Serial.print(F(";"));
     Serial.print(sx1272.packet_received.src,DEC);
-    Serial.print(F(" ; "));
+    Serial.print(F(";"));
     e = sx1272.getSNR();
     Serial.print(sx1272._SNR,DEC);
-    Serial.print(F(" ; "));
+    Serial.print(F(";"));
     e = sx1272.getRSSI();
     Serial.print(sx1272._RSSI,DEC);
     Serial.println();
