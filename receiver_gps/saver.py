@@ -33,6 +33,9 @@ if (len(ports) != 0): # on a trouvé au moins un port actif
 
     # si on reçoit un message, on l'affiche
     file = open('data.csv', 'w')
+    writer = csv.writer(file)
+    nomcolonne = "gpsfix;fixquality;latitude;longitude;status;packetNum;data;RSSIpacket;packetReceived;SNR;RSSI"
+    writer.writerow([nomcolonne])
     while True:
         data = arduino.readline()[:-2]
         print(data.decode('utf-8'))
