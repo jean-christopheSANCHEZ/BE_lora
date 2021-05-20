@@ -27,12 +27,12 @@ if (len(ports) != 0): # on a trouvé au moins un port actif
 
     # on établit la communication série
     #arduino = serial.Serial(ports[portChoisi - 1].device, baud)
-    arduino = serial.Serial('COM3', baud)
+    arduino = serial.Serial('COM4', baud)
 
     print('Connexion a ' + arduino.name + ' a un baud rate de ' + str(baud))
 
     # si on reçoit un message, on l'affiche
-    file = open('data.csv', 'w')
+    file = open('data3.csv', 'w')
     writer = csv.writer(file)
     nomcolonne = "gpsfix;fixquality;latitude;longitude;status;packetNum;data;RSSIpacket;packetReceived;SNR;RSSI"
     writer.writerow([nomcolonne])
