@@ -32,7 +32,7 @@ if (len(ports) != 0): # on a trouvé au moins un port actif
     print('Connexion a ' + arduino.name + ' a un baud rate de ' + str(baud))
 
     # si on reçoit un message, on l'affiche
-    file = open('data3.csv', 'w')
+    file = open('data11.csv', 'w')
     writer = csv.writer(file)
     nomcolonne = "gpsfix;fixquality;latitude;longitude;status;packetNum;data;RSSIpacket;packetReceived;SNR;RSSI"
     writer.writerow([nomcolonne])
